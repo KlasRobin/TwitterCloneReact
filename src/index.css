@@ -1,0 +1,210 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;
+  background-color: #7ecff4;
+}
+
+img {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+.container-vertical {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-start {
+  justify-content: flex-start !important;
+}
+
+.container-horizontal {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  border: 5px solid #40c7ff;
+  border-radius: 5px;
+  padding: 25px;
+  width: 40%;
+}
+
+.login-form label {
+  font-size: 20px;
+  margin-bottom: 0px;
+  font-weight: 200;
+}
+
+.input-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.nav {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 25px !important;
+  background-color: #40c7ff;
+}
+
+.nav-item, .btn {
+  cursor: pointer;
+}
+
+.nav-item:hover {
+  border-color: #40c7ff;
+}
+
+.header{
+  font-size: 4.5rem;
+  font-weight: 800;
+}
+
+.header span {
+  font-size: 50px;
+}
+
+.btn {
+  margin-top: 5px;
+}
+
+input {
+  padding: 5px;
+  font-size: 20px !important;
+  letter-spacing: 2px;
+}
+
+.dashboard-nav {
+  justify-content: space-between;
+  align-content: center;
+}
+
+.container-box {
+  background-color: white;
+  width: 500px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: flex-start;
+  align-content: flex-start;
+
+}
+
+.container-box .header {
+  padding: 15px;
+  border-bottom: thin;
+}
+
+.profile-container {
+  width: 350px;
+  margin: 15px;
+  background-color: #dff4ed;
+  border: 1px solid #40c7ff;
+  border-radius: 5px;
+  padding: 25px;
+}
+
+.stats-item {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.dashboard{
+  display: flex;
+  flex: row;
+  padding: 0 60px 0 50px;
+}
+
+.tweet-container {
+  width: 100%;
+  margin: 15px;
+  background-color: #dff4ed;
+  border: 1px solid #40c7ff;
+  border-radius: 5px;
+  padding: 25px;
+}
+
+.create-tweet-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.controls {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.tweet {
+  background-color: white;
+  padding: 25px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: 1px solid #40c7ff;
+  width: 100%;
+}
+
+.tweet-header {
+  justify-content: space-between;
+  margin-bottom: 5px;
+  align-content: center;
+}
+
+.tweet-content {
+  font-size: 40px;
+  font-weight: 100;
+  letter-spacing: 2px;
+}
+
+.time-stamp {
+  font-size: 20px;
+  margin-left: 2px;
+  font-weight: 100;
+  font-style: italic;
+}
+
+.tweet-container-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.author {
+  display: flex;
+  align-items: center;
+}
+
+.delete-btn {
+  align-self: flex-start;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.logo {
+  font-weight: 800;
+}
+
+.logo span{
+  font-size: 20px;
+}
+
+.logo-bird {
+  color: white;
+  font-size: 35px;
+}
+
+
+user-item {
+  margin-bottom: 10px;
+}
