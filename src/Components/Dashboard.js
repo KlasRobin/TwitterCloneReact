@@ -19,6 +19,7 @@ class Dashboard extends Component {
 
     /* Fetch loggedInUser object from localStorage */
     var loggedInUser = JSON.parse(localStorage.loggedInUser);
+
     this.state = {
       loggedInUser: loggedInUser,
       followersCount: loggedInUser.followers.length,
@@ -27,13 +28,17 @@ class Dashboard extends Component {
     }
   }
 
+  /* Lifecycle event function for when component mounts */
   componentDidMount() {
+
+    /* Get number of users following the logged in user */
     Api.getFollowees(this.state.loggedInUser.userId).then(function(response) {
       this.setState({
         followeesCount: response.data.length
       })
     }.bind(this));
 
+    /* Get number of tweets made by logged in user */
     Api.getTweetsByAuthor(this.state.loggedInUser.userId).then(function(response) {
       this.setState({
         tweetCount: response.data.length
@@ -41,35 +46,44 @@ class Dashboard extends Component {
     }.bind(this));
   }
 
+  /* Handle click event from logout buttom */
   handleClick = () => {
+    /* Deauthenticate user i.e remove all parameters in localStorage */
     Auth.deauthenticateUser();
+
+    /* Route user to root-route i.e login view */
     this.props.history.push('/');
   }
 
+  /* Increment tweetCount in state by one */
   incrementTweets = () => {
     this.setState({
       tweetCount: this.state.tweetCount + 1
     });
   }
 
+  /* Decrement tweetCount in state by one */
   decrementTweets = () => {
     this.setState({
       tweetCount: this.state.tweetCount -1
     })
   }
 
+  /* Increment followeesCount in state by one */
   incrementFollowings = () => {
     this.setState({
       followeesCount: this.state.followeesCount + 1
     });
   }
 
+  /* Decrement followeesCount in state by one */
   decrementFollowings = () => {
     this.setState({
       followeesCount: this.state.followeesCount -1
     })
   }
 
+  /* Render function for dashboard component */
   render() {
     return (
       <div>
@@ -109,4 +123,5 @@ class Dashboard extends Component {
   }
 }
 
+/* Export component so it can be imported in other files  */
 export default Dashboard;

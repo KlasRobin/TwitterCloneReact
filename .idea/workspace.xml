@@ -67,8 +67,8 @@
           <file leaf-file-name="Dashboard.js" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/Components/Dashboard.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="456">
-                  <caret line="19" column="50" lean-forward="false" selection-start-line="19" selection-start-column="50" selection-end-line="19" selection-end-column="50" />
+                <state relative-caret-position="394">
+                  <caret line="98" column="14" lean-forward="true" selection-start-line="98" selection-start-column="14" selection-end-line="98" selection-end-column="14" />
                   <folding>
                     <element signature="e#0#39#0" expanded="true" />
                   </folding>
@@ -398,12 +398,12 @@
       <workItem from="1493214252445" duration="1717000" />
       <workItem from="1493274497010" duration="42131000" />
       <workItem from="1493708814248" duration="61837000" />
-      <workItem from="1493969014823" duration="30585000" />
+      <workItem from="1493969014823" duration="31292000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="137175000" />
+    <option name="totallyTimeSpent" value="137882000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="2578" height="1408" extended-state="6" />
@@ -844,8 +844,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Components/Dashboard.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="456">
-          <caret line="19" column="50" lean-forward="false" selection-start-line="19" selection-start-column="50" selection-end-line="19" selection-end-column="50" />
+        <state relative-caret-position="394">
+          <caret line="98" column="14" lean-forward="true" selection-start-line="98" selection-start-column="14" selection-end-line="98" selection-end-column="14" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
