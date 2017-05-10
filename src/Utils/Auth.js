@@ -3,7 +3,7 @@ import axios from 'axios';
 class Auth {
 
   /**
-   * Authenticate a user. Save a token string in Local Storage
+   * Authenticate a user. Save a token string in Local Storage and redirect to dashboard.
    *
    * @param {string} token
    */
@@ -28,7 +28,7 @@ class Auth {
   }
 
   /**
-   * Deauthenticate a user. Remove a token from Local Storage.
+   * Deauthenticate a user. Remove token and user object from Local Storage.
    *
    */
   static deauthenticateUser() {

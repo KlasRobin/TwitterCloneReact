@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {Button, Nav, NavItem, NavLink} from 'reactstrap';
+import {Button, Nav, NavItem, NavLink, Alert} from 'reactstrap';
 import TwitterIcon from 'react-icons/lib/fa/twitter';
 import api from '../Utils/Api';
 import SweetAlert from 'sweetalert-react';
@@ -62,7 +62,10 @@ class RegisterForm extends Component {
       username: '',
       password: '',
       email: '',
-      showSwal: false
+      showSwal: false,
+      formHasErrors: false,
+      emailTaken: false,
+      usernameTaken: false
     }
 
   }
@@ -71,8 +74,28 @@ class RegisterForm extends Component {
     e.preventDefault();
 
     api.registerUser(this.state).then(function(response) {
-      // this.setState({showSwal: true})
-    });
+      console.log(response);
+      if(response.status === 201) {
+        this.setState({
+          showSwal: true,
+          formHasErrors: false,
+          emailTaken: false,
+          usernameTaken: false
+        });
+      }else if (response.status === 409 && response.data.message === 'Email already taken') {
+        this.setState({
+          formHasErrors: true,
+          emailTaken: true,
+          usernameTaken: false
+        });
+      }else if (response.status === 409 && response.data.message === 'Username already taken') {
+        this.setState({
+          formHasErrors: true,
+          emailTaken: false,
+          usernameTaken: true
+        });
+      }
+    }.bind(this));
   }
 
 
@@ -111,6 +134,16 @@ class RegisterForm extends Component {
           name="password"
           onChange={this.handleChange}
         />
+        {this.state.formHasErrors &&
+        <Alert color="danger">
+          {this.state.emailTaken &&
+          <span><strong>Fel! </strong>Email redan upptagen</span>
+          }
+          {this.state.usernameTaken &&
+          <span><strong>Fel! </strong>Användarnamn redan upptagen</span>
+          }
+        </Alert>
+        }
         <Button
           disabled={this.state.username === '' || this.state.password === '' || this.state.email === ''}
           color="primary"
@@ -141,7 +174,8 @@ class LoginForm extends Component {
     super(props);
     this.state = {
       username: props.username,
-      password: ''
+      password: '',
+      loginError: false
     }
   }
 
@@ -150,6 +184,13 @@ class LoginForm extends Component {
     api.login(this.state.username, this.state.password).then(function(response) {
       if(response.status === 200){
         Auth.authenticateUser(response.data.access_token, this.props.history);
+        this.setState({
+          loginError: false
+        });
+      }else if (response.status === 400) {
+        this.setState({
+          loginError: true
+        });
       }
     }.bind(this));
   }
@@ -164,6 +205,10 @@ class LoginForm extends Component {
     return (
       <form className="login-form" onSubmit={this.handleSubmit}>
         <h3>Logga In</h3>
+        {this.state.loginError &&
+        <Alert color="danger">
+          <strong>Fel! </strong>Felaktigt användarnamn och/eller lösenord!
+        </Alert>}
         <InputField
           label="Användarnamn"
           type="text"

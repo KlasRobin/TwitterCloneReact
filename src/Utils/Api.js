@@ -16,7 +16,7 @@ var BASIC_CONFIG = {
 };
 
 module.exports = {
-  
+
   registerUser: function(user) {
     return axios.post(BASE_URL + '/register/',
       {
@@ -28,28 +28,30 @@ module.exports = {
       console.log(response);
       return response;
     }).catch(function(error) {
-      console.log(error);
+      return error.response;
     });
   },
 
   login: function(username, password) {
     return axios.post(BASE_URL + '/oauth/token',
       querystring.stringify({
-      'grant_type': 'password',
-      'client_secret': 123456,
-      'client_id': 'twitter-clone-client',
-      'username': username,
-      'password': password
-    }), BASIC_CONFIG).then(function(response) {
+        'grant_type': 'password',
+        'client_secret': 123456,
+        'client_id': 'twitter-clone-client',
+        'username': username,
+        'password': password
+      }), BASIC_CONFIG).then(function(response) {
       return response;
     }).catch(function(error) {
-      console.warn(error);
+      return error.response;
     });
   },
-  
+
   getLoggedInUser: function() {
-    return axios.get(BASE_URL + '/api/users/loggedInUser',{ headers: {
-      'Authorization': 'Bearer ' + Auth.getToken()}
+    return axios.get(BASE_URL + '/api/users/loggedInUser', {
+      headers: {
+        'Authorization': 'Bearer ' + Auth.getToken()
+      }
     })
       .then(function(response) {
         return response;
@@ -57,8 +59,10 @@ module.exports = {
   },
 
   getFollowees: function(userId) {
-    return axios.get(BASE_URL + '/api/users/' + userId + '/followees',{ headers: {
-      'Authorization': 'Bearer ' + Auth.getToken()}
+    return axios.get(BASE_URL + '/api/users/' + userId + '/followees', {
+      headers: {
+        'Authorization': 'Bearer ' + Auth.getToken()
+      }
     })
       .then(function(response) {
         return response;
@@ -66,8 +70,10 @@ module.exports = {
   },
 
   getTweetsByAuthor: function(userId) {
-    return axios.get(BASE_URL + '/api/tweets/author/' + userId,{ headers: {
-      'Authorization': 'Bearer ' + Auth.getToken()}
+    return axios.get(BASE_URL + '/api/tweets/author/' + userId, {
+      headers: {
+        'Authorization': 'Bearer ' + Auth.getToken()
+      }
     })
       .then(function(response) {
         return response;
@@ -75,8 +81,10 @@ module.exports = {
   },
 
   getUserFeed: function(userId) {
-    return axios.get(BASE_URL + '/api/tweets/follower/' + userId,{ headers: {
-      'Authorization': 'Bearer ' + Auth.getToken()}
+    return axios.get(BASE_URL + '/api/tweets/follower/' + userId, {
+      headers: {
+        'Authorization': 'Bearer ' + Auth.getToken()
+      }
     })
       .then(function(response) {
         return response.data;
@@ -84,8 +92,10 @@ module.exports = {
   },
 
   getAllUsers: function() {
-    return axios.get(BASE_URL + '/api/users/',{ headers: {
-      'Authorization': 'Bearer ' + Auth.getToken()}
+    return axios.get(BASE_URL + '/api/users/', {
+      headers: {
+        'Authorization': 'Bearer ' + Auth.getToken()
+      }
     })
       .then(function(response) {
         return response;
@@ -94,11 +104,13 @@ module.exports = {
 
   postTweet: function(tweetText) {
     return axios.post(BASE_URL + '/api/tweets/',
-      {'content': tweetText,
-      },{ headers: {
-        'Authorization': 'Bearer ' + Auth.getToken(),
-        'Content-type': 'application/json'
-      }
+      {
+        'content': tweetText,
+      }, {
+        headers: {
+          'Authorization': 'Bearer ' + Auth.getToken(),
+          'Content-type': 'application/json'
+        }
       }).then(function(response) {
       return response.data;
     }).catch(function(error) {
@@ -108,23 +120,25 @@ module.exports = {
 
   deleteTweet: function(tweetId) {
     return axios.delete(BASE_URL + '/api/tweets/' + tweetId,
-      { headers: {
-        'Authorization': 'Bearer ' + Auth.getToken(),
-        'Content-type': 'application/json'
-      }
+      {
+        headers: {
+          'Authorization': 'Bearer ' + Auth.getToken(),
+          'Content-type': 'application/json'
+        }
       }).then(function(response) {
       return response.data;
     }).catch(function(error) {
       console.warn(error);
     });
   },
-  
+
   followUser: function(userToFollow, userFollowing) {
     return axios.put(BASE_URL + '/api/users/' + userFollowing + '/follow/' + userToFollow,
       {},
-      { headers: {
-        'Authorization': 'Bearer ' + Auth.getToken()
-      }
+      {
+        headers: {
+          'Authorization': 'Bearer ' + Auth.getToken()
+        }
       }).then(function(response) {
       return response;
     }).catch(function(error) {
@@ -135,9 +149,10 @@ module.exports = {
   unfollowUser: function(userToUnfollow, userUnfollowing) {
     return axios.put(BASE_URL + '/api/users/' + userUnfollowing + '/unfollow/' + userToUnfollow,
       {},
-      { headers: {
-        'Authorization': 'Bearer ' + Auth.getToken()
-      }
+      {
+        headers: {
+          'Authorization': 'Bearer ' + Auth.getToken()
+        }
       }).then(function(response) {
       return response;
     }).catch(function(error) {

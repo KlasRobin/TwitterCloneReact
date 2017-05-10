@@ -7,10 +7,17 @@ import UsersContainer from './UsersContainer';
 import TweetContainer from './TweetContainer';
 import TwitterIcon from 'react-icons/lib/fa/twitter';
 
+/*******************
+ Dashboard component
+ *******************/
+
 class Dashboard extends Component {
 
+  /* Set initial state */
   constructor(props) {
     super(props);
+
+    /* Fetch loggedInUser object from localStorage */
     var loggedInUser = JSON.parse(localStorage.loggedInUser);
     this.state = {
       loggedInUser: loggedInUser,
@@ -32,7 +39,6 @@ class Dashboard extends Component {
         tweetCount: response.data.length
       })
     }.bind(this));
-
   }
 
   handleClick = () => {
