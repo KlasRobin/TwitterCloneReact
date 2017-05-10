@@ -10,7 +10,11 @@ import TwitterIcon from 'react-icons/lib/fa/twitter';
 /*******************
  Dashboard component
  *******************/
-
+/**
+ * Dashboard view for logged in users. Contains Tweet feed, Userlist and
+ * a section with logged in user name and stats for num of tweets, followers and
+ * followees
+ * **/
 class Dashboard extends Component {
 
   /* Set initial state */

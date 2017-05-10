@@ -4,10 +4,19 @@ import Dashboard from './Dashboard'
 import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom';
 import Auth from '../Utils/Auth';
 
+/* Check if user is authenticated */
 function checkAuthentication() {
   return Auth.isUserAuthenticated();
 }
 
+/**********************
+ PrivateRoute component
+ **********************/
+/*
+* Wrapper component for Routes that checks if user is logged in.
+* If not, returns a Redirect component that routes user back to
+* Login view.
+* */
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={props => (
     checkAuthentication() ? (
@@ -20,6 +29,12 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
   )}/>
 )
 
+/*******************
+ App component
+ *******************/
+/*
+* Main component for application
+* */
 class App extends Component {
   render() {
     return (
@@ -33,4 +48,5 @@ class App extends Component {
   }
 }
 
+/* Export component App */
 module.exports = App;
