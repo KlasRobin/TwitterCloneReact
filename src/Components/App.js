@@ -36,6 +36,8 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 * Main component for application
 * */
 class App extends Component {
+
+  /* Render function for App component */
   render() {
     return (
       <BrowserRouter>

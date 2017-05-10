@@ -6,26 +6,38 @@ import api from '../Utils/Api';
 import SweetAlert from 'sweetalert-react';
 import Auth from '../Utils/Auth';
 
-
-
+/*******************
+ InputField component
+ *******************/
+/*
+* Consists of input field and label. Used in
+* both register and login form.
+* */
 class InputField extends Component {
+
+  /* Set initial state */
   constructor(props) {
     super(props);
     this.state = {
-      value: props.value === undefined ? '': props.value
+      value: props.value
     }
   }
 
+  /* Handle changes made to input field */
   handleChange = (e) => {
+    /* Set state to new value */
     let val = e.target.value;
     this.setState(function() {
       return {
         value: val
       }
     });
+
+    /* Call parent onChange function to change form state */
     this.props.onChange(this.props.name, val);
   }
 
+  /* Render function for InputField component */
   render() {
     return (
       <div className="input-field">
@@ -42,6 +54,8 @@ class InputField extends Component {
   }
 }
 
+/* Proptypes for InputField component. Specifies what props are
+ * required and what type they must be */
 InputField.PropTypes = {
   label: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
@@ -50,15 +64,25 @@ InputField.PropTypes = {
   value: PropTypes.string.isRequired
 }
 
+/* Default props if no props are provided */
 InputField.defaultProps = {
   placeholder: '',
   value: ''
 }
 
+/*******************
+ RegisterForm component
+ *******************/
+/*
+* The form for registering a user in the application.
+* Consists of the form itself and a SweetAlert component for
+* showing a success message and initially hidden error messages.
+* */
 class RegisterForm extends Component {
+
+  /* Set initial state */
   constructor(props) {
     super(props);
-
     this.state = {
       username: '',
       password: '',
@@ -68,14 +92,19 @@ class RegisterForm extends Component {
       emailTaken: false,
       usernameTaken: false
     }
-
   }
 
+  /* Handle form submit */
   handleSubmit = (e) => {
+    /* Prevent default form submission behaviour */
     e.preventDefault();
 
+    /* Register user API call */
     api.registerUser(this.state).then(function(response) {
-      console.log(response);
+
+      /* Check response status code*/
+      /* If status code equals 201 (Success): Show success SweetAlert component
+       * and hide potential error messages */
       if(response.status === 201) {
         this.setState({
           showSwal: true,
@@ -83,13 +112,19 @@ class RegisterForm extends Component {
           emailTaken: false,
           usernameTaken: false
         });
-      }else if (response.status === 409 && response.data.message === 'Email already taken') {
+      }
+      /* If status code equals to 409 (conflict) and message concerns email, show error
+       * alerts and email exists alert text */
+      else if (response.status === 409 && response.data.message === 'Email already taken') {
         this.setState({
           formHasErrors: true,
           emailTaken: true,
           usernameTaken: false
         });
-      }else if (response.status === 409 && response.data.message === 'Username already taken') {
+      }
+      /* If status code equals to 409 (conflict) and message concerns username, show error
+       * alerts and username exists alert text */
+      else if (response.status === 409 && response.data.message === 'Username already taken') {
         this.setState({
           formHasErrors: true,
           emailTaken: false,
@@ -99,20 +134,30 @@ class RegisterForm extends Component {
     }.bind(this));
   }
 
-
+ /* Handle change from child InputFields components */
   handleChange = (prop, value) => {
+    /* Create temporary object */
     var obj = {};
+
+    /* Pass property name and value to temp object */
     obj[prop] = value;
+
+    /* Set state with temp object */
     this.setState(obj);
   }
 
+  /* Handle SweetAlert confirm button click */
   handleConfirm = () => {
+    /* Hide sweetalert */
     this.setState({
       showSwal: false
     });
+
+    /* Call callback function in parent component */
     this.props.onConfirm(this.state.username);
   }
 
+  /* Render function for RegisterForm component */
   render() {
     return (
       <form className="login-form" onSubmit={this.handleSubmit}>
@@ -135,6 +180,7 @@ class RegisterForm extends Component {
           name="password"
           onChange={this.handleChange}
         />
+        {/* Shorthand if statement. Renders JSX after && if expression before && equals to true*/}
         {this.state.formHasErrors &&
         <Alert color="danger">
           {this.state.emailTaken &&
@@ -166,11 +212,21 @@ class RegisterForm extends Component {
   }
 }
 
+/* RegisterForm proptypes */
 RegisterForm.PropTypes = {
   onConfirm: PropTypes.func.isRequired
 }
 
+/*******************
+ LoginForm
+ *******************/
+/*
+ * The form for logging in to the application.
+ * Consists of the form itself and and an initially hidden error message.
+ * */
 class LoginForm extends Component {
+
+  /* Set initial state*/
   constructor(props) {
     super(props);
     this.state = {
@@ -180,15 +236,27 @@ class LoginForm extends Component {
     }
   }
 
+  /* Handle login form submit */
   handleSubmit = (e) =>{
+
+    /* Prevent default form submitting behaviour */
     e.preventDefault();
+
+    /* API call to log in user */
     api.login(this.state.username, this.state.password).then(function(response) {
+      /* Check response status code*/
+      /* If status code equals to 200 (Success) */
       if(response.status === 200){
+        /* Authenticate user and pass in response token and route history. Hide potential
+         * error message. */
         Auth.authenticateUser(response.data.access_token, this.props.history);
         this.setState({
           loginError: false
         });
-      }else if (response.status === 400) {
+      }
+      /* If status code equals to 400 (Bad request) show login error message
+      (wrong password/username) */
+      else if (response.status === 400) {
         this.setState({
           loginError: true
         });
@@ -196,12 +264,14 @@ class LoginForm extends Component {
     }.bind(this));
   }
 
+  /* Handle change to form parameters from child components */
   handleChange = (prop, value) => {
     var obj = {};
     obj[prop] = value;
     this.setState(obj);
   }
 
+  /* Render function for LoginForm component */
   render() {
     return (
       <form className="login-form" onSubmit={this.handleSubmit}>
@@ -229,15 +299,26 @@ class LoginForm extends Component {
   }
 }
 
+/* LoginForm proptypes specifications */
 LoginForm.PropTypes = {
   username: PropTypes.string.isRequired
 }
 
+/* LoginForm default props */
 LoginForm.defaultProps = {
   username: ''
 }
 
+/*******************
+ User services
+ *******************/
+/*
+* Login view component. Consists of RegisterForm and LoginForm and
+* a navbar to toggle between the two. Front page of application
+* */
 class Login extends Component {
+
+  /* Set inital state */
   constructor(props){
     super(props);
 
@@ -248,13 +329,14 @@ class Login extends Component {
 
   }
 
+  /* Handle when a user switches tab. Set activeTab state to clicked tab */
   handleTabChange = (tab) => {
     this.setState({
         activeTab: tab
     });
   }
 
-
+  /* Select usertab and set username input field value to passed username */
   openLoginFromRegister = (username) => {
     this.setState({
       activeTab: 'login',
@@ -262,6 +344,7 @@ class Login extends Component {
     });
   }
 
+  /* Login component render function */
   render() {
     var history = this.props.history;
     return (
@@ -301,4 +384,5 @@ class Login extends Component {
   }
 }
 
+/* Export Login component */
 export default Login;

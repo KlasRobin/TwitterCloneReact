@@ -1,6 +1,12 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
+/*******************
+ StatsItem component
+ *******************/
+/*
+* Component rendering a StatsItem with a stats type and number
+* */
 function StatsItem(props) {
   return (
     <div className="stats-item">
@@ -10,6 +16,14 @@ function StatsItem(props) {
   )
 }
 
+/*******************
+ ProfileContainer component
+ *******************/
+/*
+* Renders a container with some information about the logged in user.
+* Contains username, profilepic (currently just a placeholder) and some
+* user stats (number of tweets, followers and followees)
+* */
 class ProfileContainer extends Component {
   render() {
     return (
@@ -30,12 +44,15 @@ class ProfileContainer extends Component {
   }
 }
 
+/* Proptypes for ProfileContainer component*/
 ProfileContainer.propTypes = {
   username: PropTypes.string.isRequired,
   numberOfTweets: PropTypes.number.isRequired,
   numberOfFollowers: PropTypes.number.isRequired,
   numberFollowing: PropTypes.number.isRequired
 };
+
+/* Default props for ProfileContainer component*/
 ProfileContainer.defaultProps = {
   username: '',
   numberOfTweets: 0,
@@ -43,4 +60,5 @@ ProfileContainer.defaultProps = {
   numberFollowing: 0
 };
 
+/* Export ProfileContainer component */
 export default ProfileContainer;
