@@ -5,7 +5,9 @@ import './index.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import './sweetalert.css';
 
-
+/*
+* Render App
+* */
 ReactDOM.render(
   <App />,
   document.getElementById('root')

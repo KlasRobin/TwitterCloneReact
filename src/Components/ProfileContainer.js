@@ -16,6 +16,12 @@ function StatsItem(props) {
   )
 }
 
+/* StatsItem proptypes */
+StatsItem.PropTypes = {
+  count: PropTypes.number.isRequired,
+  type: PropTypes.string.isRequired
+}
+
 /*******************
  ProfileContainer component
  *******************/

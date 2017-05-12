@@ -3,8 +3,16 @@ import PropTypes from 'prop-types';
 import Api from '../Utils/Api';
 import {Button} from 'reactstrap';
 
+/*******************
+ UserItem component
+ *******************/
+/*
+* Item for displaying users in UsersContainer. Contains profile pic (currently just a
+* placeholder), username and a follow/unfollow toggle button.
+* */
 class UserItem extends React.Component {
 
+  /* Set Initial state */
   constructor(props) {
     super(props);
 
@@ -13,18 +21,22 @@ class UserItem extends React.Component {
     }
   }
 
+  /* Handle follow user button click */
   handleFollowUser = () => {
+    /* Follow user API call, set state following to true */
     Api.followUser(this.props.userId, this.props.loggedInUserId).then(function(response) {
-      console.log(response);
       this.setState({
         isFollowing: true
       });
     }.bind(this));
 
+    /* Call parent function to increment number of followings by one */
     this.props.incrementFollowings();
   }
 
+  /* Handle unfollow user button click */
   handleUnfollowUser = () => {
+    /* Unfollow user API call, set state following to false */
     Api.unfollowUser(this.props.userId, this.props.loggedInUserId).then(function(response) {
       console.log(response);
       this.setState({
@@ -32,9 +44,11 @@ class UserItem extends React.Component {
       })
     }.bind(this))
 
+    /* Call parent function to decrement number of followings by one */
     this.props.decrementFollowings();
   }
 
+  /* UserItem render function */
   render() {
       return (
       <div className="container-horizontal user-item">
@@ -42,6 +56,7 @@ class UserItem extends React.Component {
           src="https://www.webpagefx.com/data/marketing-persona-generator/img/placeholder.png"
           alt="Placeholder profile pic"/>
         {this.props.username}
+        {/* Show follow/unfollow button depending on state */}
         {this.state.isFollowing &&
           <Button onClick={this.handleUnfollowUser}>Sluta följ</Button>
         }
@@ -54,7 +69,26 @@ class UserItem extends React.Component {
   }
 }
 
+/* UserItem proptypes */
+UserItem.PropTypes = {
+  username: PropTypes.string.isRequired,
+  userId: PropTypes.number.isRequired,
+  isFollowing: PropTypes.bool.isRequired,
+  loggedInUserId: PropTypes.number.isRequired,
+  incrementFollowings: PropTypes.func.isRequired,
+  decrementFollowings: PropTypes.func.isRequired
+}
+
+/************************
+ UserContainer component
+ ************************/
+/*
+* Renders a list of UserItem components.
+* */
+
 class UsersContainer extends Component {
+
+  /* Set initial state */
   constructor(props) {
     super(props);
     this.state= {
@@ -62,11 +96,15 @@ class UsersContainer extends Component {
     }
   }
 
+  /* Lifecycle event function for when component mounts */
   componentDidMount() {
-   Api.getAllUsers().then(function(response) {
 
+    /* API call for fetching all users*/
+   Api.getAllUsers().then(function(response) {
+     /* Copy response data to variable*/
      var users = response.data.slice();
-      console.log(users, users.length);
+     /* Loop through all users followers and append isFollowing boolean property.
+      * If logged in user is amongst followers, set to true. Else, set to false.*/
      for(var i = 0; i < users.length; i++) {
        users[i].isFollowing = false;
        for(var j = 0; j < users[i].followers.length; j++) {
@@ -75,22 +113,26 @@ class UsersContainer extends Component {
          }
        }
      }
-
+      /* Update state with modified user list*/
      this.setState({
        users: users
      })
    }.bind(this))
   }
 
+  /* UserContainer component render function */
   render() {
     var loggedInUserId = this.props.loggedInUserId;
+
+    /* Filter user list and exclude logged in user */
     var users = this.state.users.filter(function(user) {
       return user.userId !== loggedInUserId;
-    }).splice(0,4);
+    });
     return (
       <div className="profile-container">
         <h5>Användare</h5>
-        {
+        {/* Map over users array and return on UserItem for each user with all necessary
+         props */
           users.map(function(user) {
            return (
              <UserItem
@@ -110,11 +152,12 @@ class UsersContainer extends Component {
   }
 }
 
+/* UserContainer proptypes */
 UsersContainer.propTypes = {
   loggedInUserId: PropTypes.number.isRequired,
   incrementFollowings: PropTypes.func.isRequired,
   decrementFollowings: PropTypes.func.isRequired
 };
-UsersContainer.defaultProps = {};
 
+/* Export UsersContainer component */
 export default UsersContainer;
