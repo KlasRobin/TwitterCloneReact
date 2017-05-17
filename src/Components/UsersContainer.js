@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Api from '../Utils/Api';
-import {Button} from 'reactstrap';
+import {Button, Input} from 'reactstrap';
 
 /*******************
  UserItem component
@@ -92,7 +92,8 @@ class UsersContainer extends Component {
   constructor(props) {
     super(props);
     this.state= {
-      users: []
+      users: [],
+      allUsers: []
     }
   }
 
@@ -115,9 +116,26 @@ class UsersContainer extends Component {
      }
       /* Update state with modified user list*/
      this.setState({
-       users: users
+       users: users,
+       allUsers: users
      })
    }.bind(this))
+  }
+
+  /* Handle input in search user field */
+  handleSearch = (e) => {
+
+      /* Filter users to match text in search field */
+      var temp = this.state.allUsers.filter(function(user) {
+        /* Make searchtext and username lowercase to make search non case-sensitive */
+        var username = user.username.toLowerCase();
+        var filter = e.target.value.toLowerCase();
+        return username.includes(filter);
+      })
+      /* Update filtered users in state */
+      this.setState({
+        users: temp
+      })
   }
 
   /* UserContainer component render function */
@@ -131,6 +149,11 @@ class UsersContainer extends Component {
     return (
       <div className="profile-container">
         <h5>Användare</h5>
+        <Input
+          className="search-field"
+          placeholder="Sök..."
+          onChange={this.handleSearch}
+        />
         {/* Map over users array and return on UserItem for each user with all necessary
          props */
           users.map(function(user) {

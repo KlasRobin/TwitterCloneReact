@@ -56,6 +56,7 @@ class CreateTweetForm extends Component {
         <Input
           onChange={this.handleChange}
           value={this.state.tweetText}
+          placeholder="Skapa en tweet..."
           maxLength="140"
         />
         <div className="controls">
@@ -163,7 +164,7 @@ class TweetContainer extends Component {
 
     /* Sort tweets by newest */
     var tweets = this.state.tweets.sort(function(a, b) {
-      return b.messageId - a.messageId
+      return b.pubDate - a.pubDate;
     });
 
     return (
@@ -171,10 +172,10 @@ class TweetContainer extends Component {
         <div className="tweet-container-header">
           <h4>Tweets</h4>
           <div>
-            <Button onClick={this.toggleForm}>
+            <Button onClick={this.toggleForm} title="Skapa tweet">
               <CreateIcon/>
             </Button>
-            <Button onClick={this.fetchTweets}>
+            <Button onClick={this.fetchTweets} title="Uppdatera">
               <RefreshIcon/>
             </Button>
           </div>

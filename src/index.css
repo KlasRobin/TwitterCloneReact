@@ -136,6 +136,7 @@ input {
 .create-tweet-form {
   display: flex;
   flex-direction: column;
+  margin-bottom: 10px;
 }
 
 .controls {
@@ -206,4 +207,8 @@ input {
 
 .user-item {
   margin-bottom: 10px;
+}
+
+.search-field {
+  margin-bottom: 15px;
 }
